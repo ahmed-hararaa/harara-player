@@ -321,6 +321,8 @@ class _YoYoPlayerState extends State<YoYoPlayer>
             videoDuration: "$videoDuration",
             forwardIcon: widget.videoStyle?.forward,
             backwardIcon: widget.videoStyle?.backward,
+            videoDurationStyle:  widget.videoStyle?.videoDurationStyle,
+            videoSeekStyle: widget.videoStyle?.videoSeekStyle,
             progressIndicatorColors: widget.videoStyle?.progressIndicatorColors ?? VideoProgressColors(),
             showMenu: showMenu,
             play: () => togglePlay())

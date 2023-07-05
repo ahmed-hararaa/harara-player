@@ -7,6 +7,8 @@ class VideoStyle {
     this.play = const Icon(Icons.play_arrow),
     this.pause = const Icon(Icons.pause),
     this.fullscreen = const Icon(Icons.fullscreen),
+    this.videoDurationStyle,
+    this.videoSeekStyle,
     this.forward = const Icon(
       Icons.fast_forward_rounded,
       color: Colors.white,
@@ -32,4 +34,6 @@ class VideoStyle {
   final VideoProgressColors progressIndicatorColors;
   final TextStyle qualityStyle;
   final TextStyle qaShowStyle;
+  final TextStyle? videoDurationStyle;
+  final TextStyle? videoSeekStyle;
 }

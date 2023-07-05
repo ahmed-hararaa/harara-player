@@ -6,9 +6,11 @@ Widget bottomBar(
     {VideoPlayerController? controller,
     String? videoSeek,
     String? videoDuration,
+    TextStyle? videoDurationStyle,
+    TextStyle? videoSeekStyle,
     Widget? backwardIcon,
     Widget? forwardIcon,
-     required VideoProgressColors progressIndicatorColors,
+    required VideoProgressColors progressIndicatorColors,
     required bool showMenu,
     Function? play}) {
   return showMenu
@@ -35,13 +37,13 @@ Widget bottomBar(
                           children: [
                             Text(
                               videoSeek!,
-                              style: TextStyle(
+                              style: videoSeekStyle ?? TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
                             ),
                             Text(
                               videoDuration!,
-                              style: TextStyle(
+                              style: videoDurationStyle ?? TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
                             ),
