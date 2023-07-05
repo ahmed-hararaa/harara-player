@@ -54,6 +54,8 @@ class YoYoPlayer extends StatefulWidget {
   /// video Type
   final void Function(String videoType)? onPlayingVideo;
 
+  final void Function(VideoPlayerController)? onVideoInitCompleted;
+
   ///
   /// ```dart
   /// YoYoPlayer(
@@ -75,6 +77,7 @@ class YoYoPlayer extends StatefulWidget {
     this.videoLoadingStyle,
     this.onFullScreen,
     this.onPlayingVideo,
+    this.onVideoInitCompleted
   }) : super(key: key);
 
   @override
@@ -129,6 +132,8 @@ class _YoYoPlayerState extends State<YoYoPlayer>
   Timer? showTime;
   //Current ScreenSize
   Size get screenSize => MediaQuery.of(context).size;
+
+
   //
   @override
   void initState() {
@@ -143,11 +148,12 @@ class _YoYoPlayerState extends State<YoYoPlayer>
         .animate(controlBarAnimationController);
     controlBottomBarAnimation = Tween(begin: -(36.0 + 0.0 * 2), end: 0.0)
         .animate(controlBarAnimationController);
-    var widgetsBinding = WidgetsBinding.instance!;
+    var widgetsBinding = WidgetsBinding.instance;
 
     widgetsBinding.addPostFrameCallback((callback) {
       widgetsBinding.addPersistentFrameCallback((callback) {
-        if (context == null) return;
+        if(!mounted) return;
+
         var orientation = MediaQuery.of(context).orientation;
         bool? _fullscreen;
         if (orientation == Orientation.landscape) {
@@ -402,7 +408,7 @@ class _YoYoPlayerState extends State<YoYoPlayer>
         }
       },
     );
-    if (m3u8Content == null && video != null) {
+    if (m3u8Content == null) {
       http.Response response = await http.get(Uri.parse(video));
       if (response.statusCode == 200) {
         m3u8Content = utf8.decode(response.bodyBytes);
@@ -557,15 +563,15 @@ class _YoYoPlayerState extends State<YoYoPlayer>
       if (playType == "MP4") {
         // Play MP4
         controller =
-            VideoPlayerController.network(url!, formatHint: VideoFormat.other)
+            VideoPlayerController.networkUrl(Uri.parse(url!), formatHint: VideoFormat.other)
               ..initialize();
       } else if (playType == "MKV") {
         controller =
-            VideoPlayerController.network(url!, formatHint: VideoFormat.dash)
+            VideoPlayerController.networkUrl(Uri.parse(url!), formatHint: VideoFormat.dash)
               ..initialize();
       } else if (playType == "HLS") {
         controller =
-            VideoPlayerController.network(url!, formatHint: VideoFormat.hls)
+            VideoPlayerController.networkUrl(Uri.parse(url!), formatHint: VideoFormat.hls)
               ..initialize()
                   .then((_) => setState(() => hasInitError = false))
                   .catchError((e) => setState(() => hasInitError = true));
@@ -578,6 +584,7 @@ class _YoYoPlayerState extends State<YoYoPlayer>
             .then((value) => setState(() => hasInitError = false))
             .catchError((e) => setState(() => hasInitError = true));
     }
+    widget.onVideoInitCompleted?.call(controller!);
   }
 
   String convertDurationToString(Duration duration) {
