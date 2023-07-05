@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screen_wake/flutter_screen_wake.dart';
-import 'package:orientation/orientation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
@@ -154,10 +153,10 @@ class _YoYoPlayerState extends State<YoYoPlayer>
         if (orientation == Orientation.landscape) {
           //Horizontal screen
           _fullscreen = true;
-          SystemChrome.setEnabledSystemUIOverlays([]);
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
         } else if (orientation == Orientation.portrait) {
           _fullscreen = false;
-          SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+          SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
         }
         if (_fullscreen != fullScreen) {
           setState(() {
@@ -666,9 +665,11 @@ class _YoYoPlayerState extends State<YoYoPlayer>
 
   void toggleFullScreen() {
     if (fullScreen) {
-      OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
+      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+      //OrientationPlugin.forceOrientation(DeviceOrientation.portraitUp);
     } else {
-      OrientationPlugin.forceOrientation(DeviceOrientation.landscapeRight);
+      SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeRight]);
+      //OrientationPlugin.forceOrientation(DeviceOrientation.landscapeRight);
     }
   }
 }
