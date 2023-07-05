@@ -243,7 +243,7 @@ class _YoYoPlayerState extends State<YoYoPlayer>
                     width: 5,
                   ),
                   topChip(
-                    Text(m3u8quality!, style: widget.videoStyle!.qualitystyle),
+                    Text(m3u8quality!, style: widget.videoStyle!.qualityStyle),
                     () {
                       // quality function
                       m3u8show = true;
@@ -319,8 +319,9 @@ class _YoYoPlayerState extends State<YoYoPlayer>
             controller: controller,
             videoSeek: "$videoSeek",
             videoDuration: "$videoDuration",
-            forwardIcon: widget.videoStyle!.forward,
-            backwardIcon: widget.videoStyle!.backward,
+            forwardIcon: widget.videoStyle?.forward,
+            backwardIcon: widget.videoStyle?.backward,
+            progressIndicatorColors: widget.videoStyle?.progressIndicatorColors ?? VideoProgressColors(),
             showMenu: showMenu,
             play: () => togglePlay())
         : Container();

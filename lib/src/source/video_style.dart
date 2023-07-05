@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 /// Video Player Icon style
 class VideoStyle {
@@ -14,8 +15,8 @@ class VideoStyle {
       Icons.fast_rewind_rounded,
       color: Colors.white,
     ),
-    this.playedColor = Colors.green,
-    this.qualitystyle = const TextStyle(
+    this.progressIndicatorColors = const VideoProgressColors(),
+    this.qualityStyle = const TextStyle(
       color: Colors.white,
     ),
     this.qaShowStyle = const TextStyle(
@@ -28,7 +29,7 @@ class VideoStyle {
   final Widget fullscreen;
   final Widget forward;
   final Widget backward;
-  final Color playedColor;
-  final TextStyle qualitystyle;
+  final VideoProgressColors progressIndicatorColors;
+  final TextStyle qualityStyle;
   final TextStyle qaShowStyle;
 }

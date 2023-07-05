@@ -8,6 +8,7 @@ Widget bottomBar(
     String? videoDuration,
     Widget? backwardIcon,
     Widget? forwardIcon,
+     required VideoProgressColors progressIndicatorColors,
     required bool showMenu,
     Function? play}) {
   return showMenu
@@ -24,8 +25,7 @@ Widget bottomBar(
                       VideoProgressIndicator(
                         controller!,
                         allowScrubbing: true,
-                        colors: VideoProgressColors(
-                            playedColor: Color.fromARGB(250, 0, 255, 112)),
+                        colors: progressIndicatorColors,
                         padding: EdgeInsets.only(left: 5.0, right: 5),
                       ),
                       Padding(
