@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screen_wake/flutter_screen_wake.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wakelock/wakelock.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:yoyo_player/src/utils/utils.dart';
 import 'package:yoyo_player/src/widget/widget_bottombar.dart';
@@ -16,6 +16,7 @@ import 'model/m3u8.dart';
 import 'model/m3u8s.dart';
 import 'responses/regex_response.dart';
 import 'widget/top_chip.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class YoYoPlayer extends StatefulWidget {
   ///Video[source],
@@ -493,8 +494,8 @@ class _YoYoPlayerState extends State<YoYoPlayer>
 // video Listener
   void listener() async {
     if (controller!.value.isInitialized && controller!.value.isPlaying) {
-      if (!await Wakelock.enabled) {
-        await Wakelock.enable();
+      if (!await WakelockPlus.enabled) {
+        await WakelockPlus.enable();
       }
       setState(() {
         videoDuration = convertDurationToString(controller!.value.duration);
@@ -503,8 +504,8 @@ class _YoYoPlayerState extends State<YoYoPlayer>
         videoDurationSecond = controller!.value.duration.inSeconds.toDouble();
       });
     } else {
-      if (await Wakelock.enabled) {
-        await Wakelock.disable();
+      if (await WakelockPlus.enabled) {
+        await WakelockPlus.disable();
         setState(() {});
       }
     }
